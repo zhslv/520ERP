@@ -70,7 +70,7 @@ public class DeptController {
      */
     @RequestMapping("loadDeptMaxOrderNum")
     public Map<String ,Object>loadDeptMaxOrderNum(){
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<String, Object>();
         QueryWrapper<Dept> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("ordernum");
         List<Dept> list = deptService.list(queryWrapper);
@@ -98,7 +98,21 @@ public class DeptController {
             return ResultObj.ADD_ERROR;
         }
     }
-
+    /**
+     * 修改部门
+     * @param deptVo
+     * @return
+     */
+    @RequestMapping("updateDept")
+    public ResultObj updateDept(DeptVo deptVo){
+        try {
+            deptService.updateById(deptVo);
+            return  ResultObj.UPDATE_SUCCESS;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultObj.UPDATE_ERROR;
+        }
+    }
 
 
 }

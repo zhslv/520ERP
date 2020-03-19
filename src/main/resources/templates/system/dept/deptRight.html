@@ -86,6 +86,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">部门名称</label>
             <div class="layui-input-block">
+                <input type="hidden" name="id">
                 <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入部门名称" class="layui-input">
             </div>
         </div>
@@ -98,7 +99,7 @@
         <div class="layui-form-item">
         <label class="layui-form-label">部门备注</label>
         <div class="layui-input-block">
-           <textarea class="layui-textarea" name="content" id="content"></textarea>
+           <textarea class="layui-textarea" name="remark" id="content"></textarea>
         </div>
         </div>
         <div class="layui-form-item">
@@ -220,7 +221,6 @@
                 title:'添加部门',
                 success:function(){
                     $("#dataFrm")[0].reset();
-                    layedit.setContent(editIndex,"");
                     url="/dept/addDept";
                     //初始化排序码
                     $.get("/dept/loadDeptMaxOrderNum",function (res) {
@@ -241,21 +241,30 @@
                     $("#dataFrm")[0].reset();
                     //装载新的数据
                     form.val("dataFrm",data);
-                    layedit.setContent(editIndex,data.content);
+                    //选中之前的父级部门 nodeId=data.pid
+                    dtree.dataInit("deptTree",data.pid);
+                    dtree.setSelectValue("deptTree");
                     url="/dept/updateDept";
                 }
             });
         }
+        //提交
         $("#doSubmit").click(function(){
             var data=$("#dataFrm").serialize();
             $.post(url,data,function(res){
                 if(res.code==200){
                     tableIns.reload();
+                    //刷新下拉树
+                    selectTree.reload();
+                    //刷新左侧的树
+                    window.parent.left.deptTree.reload();
                 }
                 layer.msg(res.msg);
                 layer.close(mainIndex);
             })
         })
+
+
         //删除
         function deleteDept(data){
             layer.confirm('你确定要删除【'+data.title+'】这条部门吗?', {icon: 3, title:'提示'}, function(index){
@@ -271,7 +280,7 @@
 
 
         //初始化下拉树
-        dtree.renderSelect({
+            var selectTree=dtree.renderSelect({
             elem: "#deptTree",
             width: "100%", // 指定树的宽度
             dataStyle:"layuiStyle", //使用layui 数据风格的格式
@@ -339,6 +348,9 @@
         tableIns.reload({
             where:{
                 id:id
+            },
+            page:{
+                curr:1
             }
         });
     }
