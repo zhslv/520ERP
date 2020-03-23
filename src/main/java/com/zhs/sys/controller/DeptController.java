@@ -35,7 +35,7 @@ public class DeptController {
     /**
      * 加载部门管理左边的部门树的json
      */
-    @RequestMapping("loadDeptManageLeftTreeJson")
+    @RequestMapping("loadDeptManagerLeftTreeJson")
     public DataGridView loadDeptManageLeftTreeJson(DeptVo deptVo){
         List<Dept> list = deptService.list();
         List<TreeNode> treeNodes = new ArrayList<>();
@@ -112,6 +112,41 @@ public class DeptController {
             e.printStackTrace();
             return ResultObj.UPDATE_ERROR;
         }
+    }
+
+    /**
+     * 删除部门
+     * @param deptVo
+     * @return
+     */
+    @RequestMapping("deleteDept")
+    public ResultObj deleteDept(DeptVo deptVo){
+        try {
+            deptService.removeById(deptVo.getId());
+            return  ResultObj.DELETE_SUCCESS;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultObj.DELETE_ERROR;
+        }
+    }
+
+    /**
+     * 检查当前ID是否有子节点
+     * @param deptVo
+     * @return
+     */
+    @RequestMapping("checkDeptHasChildrenNode")
+    public Map<String,Object>checkDeptHasChildrenNode(DeptVo deptVo){
+        Map<String, Object> map = new HashMap<>();
+        QueryWrapper<Dept> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("pid",deptVo.getId());
+        List<Dept> list = deptService.list(queryWrapper);
+        if (list.size()>0) {
+            map.put("value",true);
+        } else {
+            map.put("value",false);
+        }
+        return map;
     }
 
 
