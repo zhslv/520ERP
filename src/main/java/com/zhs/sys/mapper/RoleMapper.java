@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zhs.sys.domain.Role;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -25,4 +26,9 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @param id
      */
     void deleteRoleUserByRid(Serializable id);
+
+    /**
+     * 根据角色ID查询当前角色拥有的所有的权限或菜单ID
+     */
+    List<Integer> queryRolePermissionIdsByRid(Integer roleId);
 }

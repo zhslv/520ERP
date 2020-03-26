@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -29,4 +30,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         this.getBaseMapper().deleteRoleUserByRid(id);
         return super.removeById(id);
     }
+    /**
+     * 根据角色ID查询当前角色拥有的所有的权限或菜单ID
+     */
+    @Override
+    public List<Integer> queryRolePermissionIdsByRid(Integer roleId) {
+        return this.getBaseMapper().queryRolePermissionIdsByRid(roleId);
+    }
+
 }

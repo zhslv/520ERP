@@ -20,6 +20,8 @@ public class TreeNode {
     private Boolean spread;
     private List<TreeNode> children=new ArrayList<TreeNode>();
 
+    private String checkArr;//0表示不选中，1表示选中
+
     /**
      *首页左边导航树的构造器
      */
@@ -41,5 +43,21 @@ public class TreeNode {
         this.pid = pid;
         this.title = title;
         this.spread = spread;
+    }
+
+    /**
+     * Dtree复选框的构造器
+     * @param id
+     * @param pid
+     * @param title
+     * @param spread
+     * @param checkArr
+     */
+    public TreeNode(Integer id, Integer pid, String title, Boolean spread, String checkArr) {
+        this.id = id;
+        this.pid = pid;
+        this.title = title;
+        this.spread = spread;
+        this.checkArr = checkArr;
     }
 }
