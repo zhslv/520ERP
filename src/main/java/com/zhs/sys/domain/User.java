@@ -1,6 +1,7 @@
 package com.zhs.sys.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -62,6 +63,19 @@ public class User implements Serializable {
     private String imgpath;
 
     private String salt;
+
+
+    //新加属性
+    /**
+     * 领导名称
+     */
+    @TableField(exist = false)
+    private String leadername;
+    /**
+     * 部门名称
+     */
+    @TableField(exist = false)
+    private String deptname;
 
 
 }

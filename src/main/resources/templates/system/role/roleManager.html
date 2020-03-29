@@ -249,6 +249,7 @@
                     $.each(permissionData,function(index,item){
                         params+="&ids="+item.nodeId;
                     });
+                   // alert(params)
                     $.post("/role/saveRolePermission",params,function(res){
                         layer.msg(res.msg);
                     })

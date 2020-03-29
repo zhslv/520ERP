@@ -16,4 +16,11 @@ import java.util.List;
 public interface RoleService extends IService<Role> {
 
     List<Integer> queryRolePermissionIdsByRid(Integer id);
+
+    /**
+     * 保存角色和菜单权限之间的关系
+     * @param roleId
+     * @param ids
+     */
+    void saveRolePermission(Integer roleId, Integer[] ids);
 }

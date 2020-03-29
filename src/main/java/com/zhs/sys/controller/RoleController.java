@@ -134,5 +134,19 @@ public class RoleController {
         return new DataGridView(nodes);
     }
 
+    /**
+     * 保存角色菜单权限之间的关系
+     */
+    @RequestMapping("saveRolePermission")
+    public ResultObj saveRolePermission(Integer rid,Integer[] ids){
+        try {
+             roleService.saveRolePermission(rid,ids);
+             return ResultObj.DISPATCH_SUCCESS;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultObj.DISPATCH_ERROR;
+        }
+    }
+
 }
 

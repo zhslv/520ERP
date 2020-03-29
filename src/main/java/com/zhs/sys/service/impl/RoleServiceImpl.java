@@ -38,4 +38,20 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         return this.getBaseMapper().queryRolePermissionIdsByRid(roleId);
     }
 
+    /**
+     * 保存角色和菜单权限之间的关系
+     * @param rid
+     * @param ids
+     */
+    @Override
+    public void saveRolePermission(Integer rid, Integer[] ids) {
+        RoleMapper roleMapper = this.getBaseMapper();
+        //根据rid删除sys_role_permission
+        roleMapper.deleteRolePermissionByRid(rid);
+        if (ids!=null&&ids.length>0) {
+            for (Integer pid : ids) {
+                roleMapper.saveRolePermission(rid,pid);
+            }
+        }
+    }
 }
